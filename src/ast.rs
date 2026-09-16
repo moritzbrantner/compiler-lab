@@ -149,19 +149,10 @@ impl ExpressionTree {
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum StmtKind {
-    Let {
-        name: Span,
-        initializer: ExprId,
-    },
-    Return {
-        value: Option<ExprId>,
-    },
-    Expression {
-        expression: ExprId,
-    },
-    Block {
-        block: BlockId,
-    },
+    Let { name: Span, initializer: ExprId },
+    Return { value: Option<ExprId> },
+    Expression { expression: ExprId },
+    Block { block: BlockId },
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]

@@ -78,13 +78,9 @@ impl<'tokens> Parser<'tokens> {
     fn parse_precedence(&mut self, minimum_binding_power: u8) -> Option<ExprId> {
         let mut left = self.parse_prefix()?;
 
-        loop {
-            let Some((left_binding_power, right_binding_power, operator)) =
-                infix_binding_power(self.current().kind())
-            else {
-                break;
-            };
-
+        while let Some((left_binding_power, right_binding_power, operator)) =
+            infix_binding_power(self.current().kind())
+        {
             if left_binding_power < minimum_binding_power {
                 break;
             }

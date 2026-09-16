@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "project": {
+    "name": "Compiler Lab",
+    "repository": "moritzbrantner/compiler-lab",
+    "basePath": "/compiler-lab/",
+    "kicker": "Copy-conscious compiler architecture laboratory",
+    "description": "Compiler experiments with authoritative source text, span-based front-end representations, deterministic diagnostics, compact AST/IR foundations, and evidence-driven optimization work."
+  },
+  "links": [
+    {
+      "label": "Source",
+      "href": "https://github.com/moritzbrantner/compiler-lab"
+    },
+    {
+      "label": "Roadmap",
+      "href": "https://github.com/moritzbrantner/compiler-lab/blob/main/ROADMAP.md"
+    }
+  ],
+  "evidenceSources": [
+    {
+      "id": "coding-tooling",
+      "label": "Repository verification",
+      "kind": "coding-tooling-analysis-v1",
+      "producer": "coding-tooling",
+      "url": "https://moritzbrantner.github.io/coding-tooling/analysis.json/?repo=moritzbrantner/compiler-lab"
+    }
+  ]
+}

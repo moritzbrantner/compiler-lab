@@ -10,4 +10,9 @@ A focused laboratory for language implementation experiments, progressing from p
 - Prefer reusable, inspectable intermediate representations over framework-heavy abstractions.
 - Measure materialization and recomputation before adding performance budgets.
 
-See [ROADMAP.md](ROADMAP.md) for the staged plan.
+## Project surfaces
+
+- [Roadmap](ROADMAP.md)
+- [GitHub Pages](https://moritzbrantner.github.io/compiler-lab/) — shared project and evidence surface generated with `github-pages-template`.
+
+GitHub Pages presents repository evidence and navigation; compiler semantics remain authoritative in this repository and its tests.

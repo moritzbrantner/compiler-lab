@@ -5,10 +5,12 @@
 
 mod diagnostic;
 mod lexer;
+mod source;
 mod span;
 mod token;
 
 pub use diagnostic::Diagnostic;
-pub use lexer::{Lexed, SourceTooLarge, lex};
+pub use lexer::{Lexed, lex};
+pub use source::{DiagnosticView, SourceFile, SourcePosition, SourceTooLarge};
 pub use span::Span;
 pub use token::{Token, TokenKind};

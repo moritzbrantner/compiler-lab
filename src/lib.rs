@@ -11,10 +11,13 @@ mod source;
 mod span;
 mod token;
 
-pub use ast::{BinaryOperator, ExprId, ExprKind, ExprNode, ExpressionTree, UnaryOperator};
+pub use ast::{
+    BinaryOperator, BlockId, BlockNode, ExprId, ExprKind, ExprNode, ExpressionTree, FunctionId,
+    FunctionNode, Parameter, ProgramItem, ProgramTree, StmtId, StmtKind, StmtNode, UnaryOperator,
+};
 pub use diagnostic::Diagnostic;
 pub use lexer::{Lexed, lex};
-pub use parser::{ParsedExpression, parse_expression};
+pub use parser::{ParsedExpression, ParsedProgram, parse_expression, parse_program};
 pub use source::{DiagnosticView, SourceFile, SourcePosition, SourceTooLarge};
 pub use span::Span;
 pub use token::{Token, TokenKind};

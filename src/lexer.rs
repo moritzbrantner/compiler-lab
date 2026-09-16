@@ -135,10 +135,7 @@ impl<'src> Lexer<'src> {
     }
 
     fn peek(&self, offset: usize) -> Option<u8> {
-        self.source
-            .as_bytes()
-            .get(self.current + offset)
-            .copied()
+        self.source.as_bytes().get(self.current + offset).copied()
     }
 
     fn push_single(&mut self, kind: TokenKind) {
@@ -199,11 +196,8 @@ impl<'src> Lexer<'src> {
             .map_or(1, char::len_utf8);
         self.current += width;
         let span = Span::from_usize(start, self.current);
-        self.diagnostics.push(Diagnostic::new(
-            "LEX001",
-            "unexpected character",
-            span,
-        ));
+        self.diagnostics
+            .push(Diagnostic::new("LEX001", "unexpected character", span));
     }
 
     fn push_token(&mut self, kind: TokenKind, start: usize, end: usize) {

@@ -50,9 +50,12 @@ impl<'src> SourceFile<'src> {
     fn line_starts(&self) -> &[u32] {
         self.line_starts.get_or_init(|| {
             let mut starts = vec![0];
-            starts.extend(self.text.bytes().enumerate().filter_map(|(index, byte)| {
-                (byte == b'\n').then_some((index + 1) as u32)
-            }));
+            starts.extend(
+                self.text
+                    .bytes()
+                    .enumerate()
+                    .filter_map(|(index, byte)| (byte == b'\n').then_some((index + 1) as u32)),
+            );
             starts
         })
     }

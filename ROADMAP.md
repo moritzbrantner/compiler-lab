@@ -9,8 +9,8 @@ The lab progresses one compiler boundary at a time. Each slice should remain sma
 
 ## Stage 2 — Parser
 
-- [x] **2.1 Expression parser** — compact syntax-node IDs, literals/names by source span, grouping, prefix operators, and explicit left-associative additive/multiplicative precedence with fail-closed syntax diagnostics.
-- [ ] **2.2 Statement/function parser** — bindings, returns, blocks and functions with deterministic recovery boundaries.
+- [x] **2.1 Expression parser** — span-backed literals and names, grouping, prefix operators and left-associative arithmetic with explicit Pratt binding powers and fail-closed diagnostics.
+- [x] **2.2 Statement/function parser** — bindings, returns, expression statements, nested blocks and typed function signatures with compact ID/range storage and deterministic recovery boundaries.
 - [ ] **2.3 Parser corpus** — valid/invalid fixtures, exact diagnostics and replayable parse fingerprints.
 
 ## Stage 3 — AST and semantic analysis

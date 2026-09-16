@@ -19,8 +19,8 @@ fn positions_are_one_based_and_unicode_aware() {
 
 #[test]
 fn diagnostic_rendering_borrows_source_and_materializes_only_on_request() {
-    let source = SourceFile::new("let value = 1;\nlet π = 2;")
-        .expect("fixture must fit in one source unit");
+    let source =
+        SourceFile::new("let value = 1;\nlet π = 2;").expect("fixture must fit in one source unit");
     let lexed = lex(&source);
     let view = source.diagnostic_view(lexed.diagnostics()[0]);
 
@@ -33,8 +33,7 @@ fn diagnostic_rendering_borrows_source_and_materializes_only_on_request() {
 
 #[test]
 fn crlf_is_not_exposed_as_line_text() {
-    let source =
-        SourceFile::new("let a = 1;\r\nπ").expect("fixture must fit in one source unit");
+    let source = SourceFile::new("let a = 1;\r\nπ").expect("fixture must fit in one source unit");
     let lexed = lex(&source);
     let view = source.diagnostic_view(lexed.diagnostics()[0]);
 

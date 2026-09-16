@@ -1,8 +1,8 @@
 use core::mem::size_of;
 
 use compiler_lab::{
-    BinaryOperator, BlockNode, ExprKind, FunctionNode, Parameter, ProgramItem, SourceFile, StmtKind,
-    StmtNode, lex, parse_program,
+    BinaryOperator, BlockNode, ExprKind, FunctionNode, Parameter, ProgramItem, SourceFile,
+    StmtKind, StmtNode, lex, parse_program,
 };
 
 #[test]
@@ -115,20 +115,15 @@ fn statement_recovery_collects_stable_non_cascading_diagnostics() {
         .map(|diagnostic| diagnostic.code())
         .collect();
     assert_eq!(codes, ["PARSE101", "PARSE102", "PARSE103"]);
-    assert_eq!(
-        source.span_text(parsed.diagnostics()[0].span()),
-        "="
-    );
+    assert_eq!(source.span_text(parsed.diagnostics()[0].span()), "=");
     assert_eq!(source.span_text(parsed.diagnostics()[1].span()), "2");
     assert_eq!(source.span_text(parsed.diagnostics()[2].span()), "let");
 }
 
 #[test]
 fn malformed_function_signature_skips_its_body_before_resuming() {
-    let source = SourceFile::new(
-        "fn broken(left value) { let x = 1; }\nfn good() { return; }",
-    )
-    .expect("fixture must fit in one source unit");
+    let source = SourceFile::new("fn broken(left value) { let x = 1; }\nfn good() { return; }")
+        .expect("fixture must fit in one source unit");
     let lexed = lex(&source);
     let parsed = parse_program(&lexed);
 

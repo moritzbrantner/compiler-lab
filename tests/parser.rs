@@ -154,8 +154,8 @@ fn rejects_tokens_after_a_complete_expression() {
 
 #[test]
 fn parser_output_is_replayable() {
-    let source = SourceFile::new("-1 + value * (2 + 3)")
-        .expect("fixture must fit in one source unit");
+    let source =
+        SourceFile::new("-1 + value * (2 + 3)").expect("fixture must fit in one source unit");
     let lexed = lex(&source);
 
     assert_eq!(parse_expression(&lexed), parse_expression(&lexed));

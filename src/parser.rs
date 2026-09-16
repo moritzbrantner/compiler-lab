@@ -123,11 +123,8 @@ impl<'tokens> Parser<'tokens> {
         while self.current().kind() != TokenKind::Eof {
             if self.current().kind() == TokenKind::RightBrace {
                 let token = self.advance();
-                self.diagnostics.push(Diagnostic::new(
-                    "PARSE114",
-                    "unexpected `}`",
-                    token.span(),
-                ));
+                self.diagnostics
+                    .push(Diagnostic::new("PARSE114", "unexpected `}`", token.span()));
                 continue;
             }
 
@@ -171,11 +168,7 @@ impl<'tokens> Parser<'tokens> {
     fn parse_function(&mut self) -> Option<FunctionId> {
         let function_token = self.advance();
         let name = self
-            .expect(
-                TokenKind::Identifier,
-                "PARSE104",
-                "expected function name",
-            )?
+            .expect(TokenKind::Identifier, "PARSE104", "expected function name")?
             .span();
         self.expect(TokenKind::LeftParen, "PARSE105", "expected `(`")?;
 
@@ -183,19 +176,11 @@ impl<'tokens> Parser<'tokens> {
         if self.current().kind() != TokenKind::RightParen {
             loop {
                 let parameter_name = self
-                    .expect(
-                        TokenKind::Identifier,
-                        "PARSE106",
-                        "expected parameter name",
-                    )?
+                    .expect(TokenKind::Identifier, "PARSE106", "expected parameter name")?
                     .span();
                 self.expect(TokenKind::Colon, "PARSE107", "expected `:`")?;
                 let type_name = self
-                    .expect(
-                        TokenKind::Identifier,
-                        "PARSE108",
-                        "expected parameter type",
-                    )?
+                    .expect(TokenKind::Identifier, "PARSE108", "expected parameter type")?
                     .span();
                 self.parameters
                     .push(Parameter::new(parameter_name, type_name));
@@ -214,12 +199,8 @@ impl<'tokens> Parser<'tokens> {
         let return_type = if self.current().kind() == TokenKind::Arrow {
             self.advance();
             Some(
-                self.expect(
-                    TokenKind::Identifier,
-                    "PARSE110",
-                    "expected return type",
-                )?
-                .span(),
+                self.expect(TokenKind::Identifier, "PARSE110", "expected return type")?
+                    .span(),
             )
         } else {
             None
@@ -272,11 +253,7 @@ impl<'tokens> Parser<'tokens> {
     fn parse_let_statement(&mut self) -> Option<StmtId> {
         let let_token = self.advance();
         let name = self
-            .expect(
-                TokenKind::Identifier,
-                "PARSE101",
-                "expected binding name",
-            )?
+            .expect(TokenKind::Identifier, "PARSE101", "expected binding name")?
             .span();
         self.expect(TokenKind::Equal, "PARSE102", "expected `=`")?;
         let initializer = self.parse_precedence(0)?;
@@ -311,7 +288,10 @@ impl<'tokens> Parser<'tokens> {
         let left_brace = self.expect(TokenKind::LeftBrace, "PARSE111", "expected `{`")?;
         let mut statements = Vec::new();
 
-        while !matches!(self.current().kind(), TokenKind::RightBrace | TokenKind::Eof) {
+        while !matches!(
+            self.current().kind(),
+            TokenKind::RightBrace | TokenKind::Eof
+        ) {
             if let Some(statement) = self.parse_statement() {
                 statements.push(statement);
             } else {
@@ -333,11 +313,7 @@ impl<'tokens> Parser<'tokens> {
         let statement_count = statements.len();
         self.block_statements.extend(statements);
         let span = left_brace.span().through(right_brace.span());
-        Some(self.push_block(BlockNode::new(
-            statement_start,
-            statement_count,
-            span,
-        )))
+        Some(self.push_block(BlockNode::new(statement_start, statement_count, span)))
     }
 
     fn parse_precedence(&mut self, minimum_binding_power: u8) -> Option<ExprId> {
@@ -389,9 +365,7 @@ impl<'tokens> Parser<'tokens> {
                     _ => unreachable!(),
                 };
                 let operand = self.parse_precedence(PREFIX_BINDING_POWER)?;
-                let span = token
-                    .span()
-                    .through(self.expression_node(operand).span());
+                let span = token.span().through(self.expression_node(operand).span());
                 Some(self.push_expression(ExprKind::Unary { operator, operand }, span))
             }
             TokenKind::LeftParen => {
@@ -422,7 +396,10 @@ impl<'tokens> Parser<'tokens> {
     }
 
     fn recover_statement(&mut self) {
-        while !matches!(self.current().kind(), TokenKind::Eof | TokenKind::RightBrace) {
+        while !matches!(
+            self.current().kind(),
+            TokenKind::Eof | TokenKind::RightBrace
+        ) {
             match self.current().kind() {
                 TokenKind::Semicolon => {
                     self.advance();

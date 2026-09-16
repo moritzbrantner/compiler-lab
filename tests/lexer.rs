@@ -38,7 +38,12 @@ fn skips_line_comments_and_recognizes_function_surface() {
     assert_eq!(kinds[0], TokenKind::Fn);
     assert!(kinds.contains(&TokenKind::Arrow));
     assert!(kinds.contains(&TokenKind::Return));
-    assert!(!lexed.tokens().iter().any(|token| lexed.token_text(*token) == "body"));
+    assert!(
+        !lexed
+            .tokens()
+            .iter()
+            .any(|token| lexed.token_text(*token) == "body")
+    );
     assert!(lexed.diagnostics().is_empty());
 }
 

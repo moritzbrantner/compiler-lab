@@ -5,7 +5,7 @@ The lab progresses one compiler boundary at a time. Each slice should remain sma
 ## Stage 1 — Lexical front end
 
 - [x] **1.1 Copy-conscious lexer foundation** — authoritative source buffer, compact byte spans, deterministic tokens and diagnostics, comments/keywords/operators, focused CI.
-- [ ] **1.2 Source locations and diagnostic rendering** — line index built once per source, stable line/column lookup, snippets rendered on demand without attaching copied source text to diagnostics.
+- [x] **1.2 Source locations and diagnostic rendering** — lazy line index built once per source, stable one-based line/character lookup, borrowed snippets and on-demand diagnostic rendering without attaching copied source text to diagnostics.
 
 ## Stage 2 — Parser
 
@@ -43,3 +43,4 @@ The lab progresses one compiler boundary at a time. Each slice should remain sma
 - Do not make snapshots, pretty-printed forms or full-representation clones part of ordinary compilation; materialize them only when explicitly requested for diagnostics, debugging or persistence.
 - Before imposing runtime budgets, instrument multiplicative costs: bytes copied, nodes/tokens materialized, pass visits and repeated analyses.
 - Every compiler stage must be deterministic, replayable and independently testable.
+- GitHub Pages presents project/evidence state through `github-pages-template`; it does not become an authority for compiler semantics or performance verdicts.

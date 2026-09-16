@@ -26,3 +26,24 @@ jobs:
         run: cargo clippy --all-targets --all-features -- -D warnings
       - name: Test
         run: cargo test --all-targets --all-features
+
+  pages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - name: Build shared project pages
+        run: >-
+          npm exec --yes
+          --package=git+https://github.com/moritzbrantner/github-pages-template.git#42439c4797a640bed464a21a35747eb9aea1dec3
+          -- github-pages-template build
+          --config ./site/pages.config.json
+          --out ./dist
+      - name: Verify generated routes
+        run: |
+          test -f dist/index.html
+          test -f dist/stats/index.html
+          test -f dist/evidence/index.html
+          test -f dist/project-pages.json

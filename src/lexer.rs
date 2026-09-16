@@ -1,6 +1,4 @@
-use core::fmt;
-
-use crate::{Diagnostic, Span, Token, TokenKind};
+use crate::{Diagnostic, SourceFile, Span, Token, TokenKind};
 
 /// The result of one deterministic lexical pass over a borrowed source buffer.
 #[derive(Debug, PartialEq, Eq)]
@@ -39,44 +37,12 @@ impl<'src> Lexed<'src> {
     }
 }
 
-/// The lexer uses compact 32-bit source positions, so one source unit is bounded to 4 GiB.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub struct SourceTooLarge {
-    bytes: usize,
-}
-
-impl SourceTooLarge {
-    #[must_use]
-    pub const fn bytes(self) -> usize {
-        self.bytes
-    }
-}
-
-impl fmt::Display for SourceTooLarge {
-    fn fmt(&self, formatter: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(
-            formatter,
-            "source is {} bytes; compiler-lab source units are limited to {} bytes",
-            self.bytes,
-            u32::MAX
-        )
-    }
-}
-
-impl std::error::Error for SourceTooLarge {}
-
 /// Lexes one source unit in a single forward pass.
 ///
 /// Identifiers are deliberately ASCII-only in this first slice. A non-ASCII character is emitted
 /// as one whole-character diagnostic span so every produced span remains a valid UTF-8 boundary.
-pub fn lex(source: &str) -> Result<Lexed<'_>, SourceTooLarge> {
-    if source.len() > u32::MAX as usize {
-        return Err(SourceTooLarge {
-            bytes: source.len(),
-        });
-    }
-
-    Ok(Lexer::new(source).run())
+pub fn lex<'src>(source: &SourceFile<'src>) -> Lexed<'src> {
+    Lexer::new(source.text()).run()
 }
 
 struct Lexer<'src> {

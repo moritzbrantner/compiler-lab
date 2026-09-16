@@ -77,8 +77,8 @@ fn unexpected_unicode_uses_a_whole_character_span() {
 
 #[test]
 fn lexical_output_is_replayable() {
-    let source = SourceFile::new("let answer = 40 + 2;")
-        .expect("fixture must fit in one source unit");
+    let source =
+        SourceFile::new("let answer = 40 + 2;").expect("fixture must fit in one source unit");
     assert_eq!(lex(&source), lex(&source));
 }
 

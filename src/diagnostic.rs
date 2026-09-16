@@ -1,6 +1,6 @@
 use crate::Span;
 
-/// A deterministic lexical diagnostic. Messages are static; the source excerpt is rendered on demand.
+/// A deterministic compiler diagnostic. Messages are static; source excerpts are rendered on demand.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct Diagnostic {
     code: &'static str,

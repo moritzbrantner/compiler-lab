@@ -27,6 +27,12 @@ impl<'src> SourceFile<'src> {
         self.text
     }
 
+    /// Resolves compiler-produced source spans without storing copied lexemes in derived data.
+    #[must_use]
+    pub fn span_text(&self, span: Span) -> &'src str {
+        &self.text[span.range()]
+    }
+
     #[must_use]
     pub fn line_count(&self) -> usize {
         self.line_starts().len()

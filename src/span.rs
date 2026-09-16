@@ -18,6 +18,13 @@ impl Span {
         }
     }
 
+    pub(crate) const fn through(self, other: Self) -> Self {
+        Self {
+            start: self.start,
+            end: other.end,
+        }
+    }
+
     #[must_use]
     pub const fn start(self) -> u32 {
         self.start

@@ -52,3 +52,14 @@ jobs:
           grep -Fq 'Evidence revision' dist/assets/site-runtime.js
           grep -Fq 'Evidence identity and revision are current.' dist/assets/evidence-source.js
           grep -Fq 'repository-identity-mismatch' dist/assets/evidence-source.js
+
+  merge-ready:
+    name: merge-ready
+    if: ${{ always() }}
+    needs: ["rust", "pages"]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: moritzbrantner/reusable-workflows/.github/actions/merge-ready@b0f25f241d76af2584dfc9e375084ff5c5cb97da
+        with:
+          needs: ${{ toJSON(needs) }}
+          required: '["rust", "pages"]'
